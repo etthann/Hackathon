@@ -1,0 +1,16 @@
+What to do:
+
+Make a an interval to tell the code when we update and redraw
+Replace the square with an actual picture
+
+
+
+NOTE:
+We can change the for loops for keyboard handling to switch and case
+We can use two different methods to change how much fps is running
+
+1st Method: The sleep method
+
+WE ARE DOING THIS ONE RN
+
+2nd Method:
