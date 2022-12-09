@@ -1,180 +1,77 @@
 package src;
-//Provides all the visuals, buttons/controls, basically the actual game
 
-//Imports
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.JPanel;
-import java.lang.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-//If you don't know what a thread is it is basically
+public class KeyHandler implements KeyListener { //KeyListener allows the program to recieve keyboard events
 
-//JPanel allows us to get the methods to make the game
+    public boolean upPressed, downPressed, leftPressed, rightPressed;
 
-//Implements Runnable means we can multithread (basically means we can run multiple programs at once)
-public class GamePanel extends JPanel implements Runnable {
+    //Must have all the three methods
 
-    // set variables for the dimensions of the window
-    public static int width;
-    public static int height;
-
-    // Use the Thread class to set a game clock (FPS)
-    // It allows us to start something and stop it if not stopped it will keep on
-    // running until the entire program is stopped
-    // We use a thread here because we want the fps run simultainiously run with the
-    // program until it ends
-    // We implement runnable to use the thread
-    Thread thread;
-
-
-    //Initialize KeyHandler function
-    KeyHandler keyH = new KeyHandler();
-
-    //Initialize player function
-    Player player = new Player(this,keyH);
-
-    //Set player's default postion
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 1;
-
-    //FPS
-    int FPS = 60;
-
-    public GamePanel(int width, int height) {
-
-        // sets the dimension of the screen but we call it in the window class with the
-        // method setContentPane
-        this.setPreferredSize(new Dimension(width, height));
-
-        // set background color
-        this.setBackground(Color.black);
-
-        // Allow many graphics to load at once and its faster, improve rendering
-        // performance
-        this.setDoubleBuffered(true);
-
-        //Adds the keyboard input and GamePanel can recognize the key input
-        this.addKeyListener(keyH);
-
-        // Allows the Jpanel to focus and have input as soon as the JFrame is made (keyboard input
-        // and shit)
-        this.setFocusable(true);
-        requestFocus();
-
-    }
-
-    public void gameThreadStart() {
-
-        // Instantiate a thread
-        thread = new Thread(this);
-
-        // call the run function
-        thread.start();
-    }
-
-    public void addNotify() {
-
-        // call the superclass method addNotify and it connects the awt to the window so
-        // like we can actually move stuff or somethign i think (idk)
-        super.addNotify();
-
-    }
 
     @Override
-    // Overrides the implements runnable
-    // When we call the thread the run function will automatically start
-    public void run() {
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
 
-        // Game Loop below
-
-        //We are dividing one second by 60fps per second which equals it draws the screen every 0.016 seconds
-        //To change just divide by a different number
-        double drawInterval = 100000000/FPS;
-
-        //Gives us 0.0166 seconds before the frame redraws
-        //We use nano seconds instead of milliseconds to get a more accurate time
-        double nextDrawTime = System.nanoTime() + drawInterval;
+    }
 
 
-        // as long as the thread is not stopped it repeats everything in side the
-        // brackets
-        while (thread != null) {
+    // If key is pressed
 
-            //Restriction to make the computer update 60 frames per seconds
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
 
+        //   returns the integer of the key that is pressed
+        int key = e.getKeyCode();
 
-            // test if the thread is running you can put it in or not
-//            System.out.println("The game loop is running");
+        if (key == KeyEvent.VK_W) {
+            upPressed = true;
 
-            // Code to update information (e.g. Character Positions)
-            update(); // Calls the update function
+        }
 
-            // Draw the screen with updated informatin (e.g. the background and shit)
+        if (key == KeyEvent.VK_S) {
+            downPressed = true;
 
-            repaint(); // Call the paintComponents function, it's not called paintComponents but it's
-            // called repaint
+        }
 
+        if (key == KeyEvent.VK_D) {
+            rightPressed = true;
+        }
 
-
-            //Try the code
-            try {
-                //We find the different to tell us how much time is remaining until the next draw time so we can tell the program how much time it needs to sleep
-                double remainingTime = nextDrawTime - System.nanoTime();
-
-                //Convert from nano to milliseconds
-                remainingTime = remainingTime/1000000;
-
-                if (remainingTime < 0){
-                    remainingTime = 0;
-                }
-
-                //pauses the game loop
-                Thread.sleep((long) remainingTime);
-
-                //The new time after the frame has passed
-                nextDrawTime += drawInterval;
-
-            //Handles exceptions and errors and prints the issues
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+        if (key == KeyEvent.VK_A) {
+            leftPressed = true;
         }
 
     }
 
-    public void update() {
-        //Updates everything in the game
-        player.update();
+    @Override
 
-    }
+    // If key is not pressed
 
-    // Built in method by java
-    // Standard name to draw things on JPanel
-    // Other ways to draw but like I don't know anymore 😔
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
 
-    public void paintComponent(Graphics g) { // Graphics is a class that has many functions that allow us to draw
-        // objects onto the screen
+        int key = e.getKeyCode();
 
-        // We need to type this if we are using paintComponents because
-        // I honestly don't know what this is for but people say it's like for JPanel's
-        // opaquity
-        super.paintComponent(g);
+        if (key == KeyEvent.VK_W) {
+            upPressed = false;
 
-        // Extends the graphics class to provide better control over geometry,
-        // corddinates, layout and etc
-        // Change the graphics class to graphics2d class
-        Graphics2D g2 = (Graphics2D)g;
+        }
 
-        //we need to add g2 or else nothing would draw here
-        player.draw(g2);
+        if (key == KeyEvent.VK_S) {
+            downPressed = false;
 
+        }
 
-        // Get rid of the graphics and release any system resources that it is using
-        g2.dispose();
+        if (key == KeyEvent.VK_D) {
+            rightPressed = false;
+        }
+
+        if (key == KeyEvent.VK_A) {
+            leftPressed = false;
+        }
 
     }
 
