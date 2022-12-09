@@ -6,3 +6,6 @@ However some say that the sleep method is in accurate so you can switch to Delta
 and get rid of it (delete everything in the try and catch methods)
 
 4. Explain what I did to the character shit cuz like I am so confused on what I wrote and I NEED an explanation
+
+5. Add character animation and we are going to use a for loop so please make the pictures a png and label them the same name
+for example (character1.png, character2.png, character3.png...)
