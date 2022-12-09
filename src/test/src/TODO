@@ -9,3 +9,5 @@ and get rid of it (delete everything in the try and catch methods)
 
 5. Add character animation and we are going to use a for loop so please make the pictures a png and label them the same name
 for example (character1.png, character2.png, character3.png...)
+
+We add the character sprite in the player file and the draw function, use variables x and y to move the character and speed to move the character how many pixels
