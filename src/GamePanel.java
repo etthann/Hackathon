@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
+import java.lang.*;
 
 //If you don't know what a thread is it is basically
 
@@ -31,8 +32,10 @@ public class GamePanel extends JPanel implements Runnable {
     //Initialize KeyHandler function
     KeyHandler keyH = new KeyHandler();
 
-    //Set player's default postion
+    //Initialize player function
+    Player player = new Player(this,keyH);
 
+    //Set player's default postion
     int playerX = 100;
     int playerY = 100;
     int playerSpeed = 1;
@@ -92,7 +95,9 @@ public class GamePanel extends JPanel implements Runnable {
         double drawInterval = 100000000/FPS;
 
         //Gives us 0.0166 seconds before the frame redraws
+        //We use nano seconds instead of milliseconds to get a more accurate time
         double nextDrawTime = System.nanoTime() + drawInterval;
+
 
         // as long as the thread is not stopped it repeats everything in side the
         // brackets
@@ -112,6 +117,9 @@ public class GamePanel extends JPanel implements Runnable {
             repaint(); // Call the paintComponents function, it's not called paintComponents but it's
             // called repaint
 
+
+
+            //Try the code
             try {
                 //We find the different to tell us how much time is remaining until the next draw time so we can tell the program how much time it needs to sleep
                 double remainingTime = nextDrawTime - System.nanoTime();
@@ -126,6 +134,10 @@ public class GamePanel extends JPanel implements Runnable {
                 //pauses the game loop
                 Thread.sleep((long) remainingTime);
 
+                //The new time after the frame has passed
+                nextDrawTime += drawInterval;
+
+            //Handles exceptions and errors and prints the issues
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -135,30 +147,14 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-
-        if (keyH.upPressed) {
-            playerY -= playerSpeed;
-
-        }
-
-        if (keyH.downPressed) {
-            playerY += playerSpeed;
-        }
-
-        if (keyH.leftPressed) {
-            playerX -= playerSpeed;
-        }
-
-        if (keyH.rightPressed) {
-            playerX += playerSpeed;
-        }
+        //Updates everything in the game
+        player.update();
 
     }
 
     // Built in method by java
     // Standard name to draw things on JPanel
     // Other ways to draw but like I don't know anymore 😔
-
 
     public void paintComponent(Graphics g) { // Graphics is a class that has many functions that allow us to draw
         // objects onto the screen
@@ -173,14 +169,8 @@ public class GamePanel extends JPanel implements Runnable {
         // Change the graphics class to graphics2d class
         Graphics2D g2 = (Graphics2D)g;
 
-
-        //Replace all of this code with the character this is just place holder
-
-        // Set the color of the objects you draw
-        g2.setColor(Color.white);
-
-        // Make the rectangle (x pos, y pos, width, height)
-        g2.fillRect(playerX, playerY, 10, 10);
+        //we need to add g2 or else nothing would draw here
+        player.draw(g2);
 
 
         // Get rid of the graphics and release any system resources that it is using
