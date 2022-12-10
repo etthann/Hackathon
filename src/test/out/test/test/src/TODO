@@ -1,8 +1,0 @@
-1. REPLACE SQUARE WITH CHARACTER
-2. REPLACE BLACK SCREEN WITH BACKGROUND
-3. DECIDE ON WHETHER TO USE THE SLEEP METHOD OR DELTA/ACCUMULATOR METHOD
-(Don't know how to do DELTA/ACCUMULATOR method) but sleep method is what I did
-However some say that the sleep method is in accurate so you can switch to Delta
-and get rid of it (delete everything in the try and catch methods)
-
-4. Explain what I did to the character shit cuz like I am so confused on what I wrote and I NEED an explanation
