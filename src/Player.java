@@ -60,7 +60,7 @@ public class Player extends Characters{
     BufferedImage image = null;
 
     
-    
+//I thikn we can use a foor loop to do animation but I don't know if it'll work
     //Determine what picture we use it's essentially an if statemnet
     if (spriteNumber == 1) {
         switch (setDirection) {
@@ -82,7 +82,7 @@ public class Player extends Characters{
             }
         }
     else if (spriteNumber == 2) {
-        
+        //This is where the second photos are
     }
     
     // Draws the pictures
